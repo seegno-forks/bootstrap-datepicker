@@ -1707,21 +1707,21 @@
 			};
 
 			return '<tr>'+
-				'<th class="timepicker" colspan="7">'+
-					'<select class="time" name="hour">'+
+				'<th class="timepicker form-inline" colspan="7">'+
+					'<select class="time form-control" name="hour">'+
 						optionTags(0, 24)+
 					'</select>'+
-					'<select class="time" name="minute">'+
+					'<select class="time form-control" name="minute">'+
 						optionTags(0, 60)+
 					'</select>'+
-					'<select class="time" name="second">'+
+					'<select class="time form-control" name="second">'+
 						optionTags(0, 60, 5)+
 					'</select>'+
-					'<select class="time" name="ampm">'+
+					'<select class="time form-control" name="ampm">'+
 						'<option value="am">am</option>'+
 						'<option value="pm">pm</option>'+
 					'</select>'+
-					'<button class="btn btn-success">' +
+					' <button class="btn btn-success">' +
 						'<span class="glyphicon glyphicon-ok"></span>' +
 					'</button>'+
 				'</th>'+
