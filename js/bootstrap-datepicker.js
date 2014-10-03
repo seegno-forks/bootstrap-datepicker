@@ -1712,7 +1712,7 @@
 						optionTags(0, 24)+
 					'</select>'+
 					'<select class="time form-control" name="minute">'+
-						optionTags(0, 60)+
+						optionTags(0, 60, 5)+
 					'</select>'+
 					'<select class="time form-control" name="second">'+
 						optionTags(0, 60, 5)+
