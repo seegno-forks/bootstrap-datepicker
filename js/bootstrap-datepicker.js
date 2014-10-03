@@ -1697,9 +1697,9 @@
 		},
 
 		timepickerTemplate: function(){
-			var optionTags = function(min, max){
+			var optionTags = function(min, max, step){
 				var s = '';
-				for (var i = min; i < max; i++){
+				for (var i = min; i < max; i += step || 1) {
 					var val = ('0' + i).slice(-2);
 					s += '<option value="' + val + '">' + val + '</option>';
 				}
@@ -1715,7 +1715,7 @@
 						optionTags(0, 60)+
 					'</select>'+
 					'<select class="time" name="second">'+
-						optionTags(0, 60)+
+						optionTags(0, 60, 5)+
 					'</select>'+
 					'<select class="time" name="ampm">'+
 						'<option value="am">am</option>'+
