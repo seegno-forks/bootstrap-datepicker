@@ -976,7 +976,7 @@
 								break;
 							case 'today':
 								var date = new Date();
-								date = UTCDate(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
+								date = UTCDate(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds());
 
 								this.showMode(-2);
 								var which = this.o.todayBtn === 'linked' ? null : 'view';
