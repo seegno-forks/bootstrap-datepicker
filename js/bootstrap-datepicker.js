@@ -109,7 +109,7 @@
 		if (this.component && this.component.length === 0)
 			this.component = false;
 
-		this.picker = $(DPGlobal.template);
+		this.picker = $(DPGlobal.template(this.o));
 		this._buildEvents();
 		this._attachEvents();
 
@@ -198,6 +198,9 @@
 			}
 
 			o.startView = Math.max(o.startView, o.minViewMode);
+
+			o.minutesStep = Math.max(defaults.minutesStep, o.minutesStep);
+			o.secondsStep = Math.max(defaults.secondsStep, o.secondsStep);
 
 			// true, false, or Number > 0
 			if (o.multidate !== true){
@@ -1473,10 +1476,12 @@
 		keyboardNavigation: true,
 		language: 'en',
 		minViewMode: 0,
+		minutesStep: 1,
 		multidate: false,
 		multidateSeparator: ',',
 		orientation: "auto",
 		rtl: false,
+		secondsStep: 1,
 		showTime: false,
 		startDate: -Infinity,
 		startView: 0,
@@ -1691,7 +1696,7 @@
 			return date.join('');
 		},
 
-		timepickerTemplate: function(){
+		timepickerTemplate: function (opts) {
 			var optionTags = function(min, max, step){
 				var s = '';
 				for (var i = min; i < max; i += step || 1) {
@@ -1707,10 +1712,10 @@
 						optionTags(0, 24)+
 					'</select>'+
 					'<select class="time form-control" name="minute">'+
-						optionTags(0, 60, 5)+
+						optionTags(0, 60, opts.minutesStep) +
 					'</select>'+
 					'<select class="time form-control" name="second">'+
-						optionTags(0, 60, 5)+
+						optionTags(0, 60, opts.secondsStep) +
 					'</select>'+
 					'<select class="time form-control" name="ampm">'+
 						'<option value="am">am</option>'+
@@ -1733,40 +1738,43 @@
 		contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>'
 	};
 
-	DPGlobal.footTemplate =
-		'<tfoot>' +
-			DPGlobal.timepickerTemplate()+
-			'<tr>'+
-				'<th colspan="7" class="today"></th>'+
-			'</tr>'+
-			'<tr>'+
-				'<th colspan="7" class="clear"></th>'+
-			'</tr>'+
-		'</tfoot>';
+	DPGlobal.footTemplate = function (opts) {
+		return '<tfoot>' +
+				DPGlobal.timepickerTemplate(opts) +
+				'<tr>' +
+					'<th colspan="7" class="today"></th>' +
+				'</tr>' +
+				'<tr>' +
+					'<th colspan="7" class="clear"></th>' +
+				'</tr>' +
+			'</tfoot>';
+	};
 
-	DPGlobal.template = '<div class="datepicker">'+
-							'<div class="datepicker-days">'+
-								'<table class=" table-condensed">'+
-									DPGlobal.headTemplate+
-									'<tbody></tbody>'+
-									DPGlobal.footTemplate+
-								'</table>'+
-							'</div>'+
-							'<div class="datepicker-months">'+
-								'<table class="table-condensed">'+
-									DPGlobal.headTemplate+
-									DPGlobal.contTemplate+
-									DPGlobal.footTemplate+
-								'</table>'+
-							'</div>'+
-							'<div class="datepicker-years">'+
-								'<table class="table-condensed">'+
-									DPGlobal.headTemplate+
-									DPGlobal.contTemplate+
-									DPGlobal.footTemplate+
-								'</table>'+
-							'</div>'+
-						'</div>';
+	DPGlobal.template = function (options) {
+		return '<div class="datepicker">' +
+				'<div class="datepicker-days">' +
+					'<table class=" table-condensed">' +
+						DPGlobal.headTemplate +
+						'<tbody></tbody>' +
+						DPGlobal.footTemplate(options) +
+					'</table>' +
+				'</div>' +
+				'<div class="datepicker-months">' +
+					'<table class="table-condensed">' +
+						DPGlobal.headTemplate +
+						DPGlobal.contTemplate +
+						DPGlobal.footTemplate(options) +
+					'</table>' +
+				'</div>' +
+				'<div class="datepicker-years">' +
+					'<table class="table-condensed">' +
+						DPGlobal.headTemplate +
+						DPGlobal.contTemplate +
+						DPGlobal.footTemplate(options) +
+					'</table>' +
+				'</div>' +
+			'</div>';
+	};
 
 	$.fn.datepicker.DPGlobal = DPGlobal;
 

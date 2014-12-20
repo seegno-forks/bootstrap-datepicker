@@ -713,3 +713,83 @@ test('showTime', function () {
     datesEqual(dp.dates[0], UTCDate(2012, 2, 5, 17, 59, 2));
     datesEqual(dp.viewDate, UTCDate(2012, 2, 5, 17, 59, 2));
 });
+
+test('minutesStep', function () {
+    var input = $('<input />')
+            .appendTo('#qunit-fixture')
+            .val('2012-03-05 15:10:57')
+            .datepicker({
+                format: 'yyyy-mm-dd h:i:s',
+                showTime: true,
+                minutesStep: 5
+            }),
+        dp = input.data('datepicker'),
+        picker = dp.picker,
+        select = picker.find('.datepicker-days tfoot th.timepicker select.time[name=minute]');
+
+    input.focus();
+
+    equal(select.children('option:first').val(), '00');
+    equal(select.children('option:eq(1)').val(), '05');
+    equal(select.children('option').length, 12);
+});
+
+test('minutesStep with negative value', function () {
+    var input = $('<input />')
+            .appendTo('#qunit-fixture')
+            .val('2012-03-05 15:9:57')
+            .datepicker({
+                format: 'yyyy-mm-dd h:i:s',
+                showTime: true,
+                minutesStep: -2
+            }),
+        dp = input.data('datepicker'),
+        picker = dp.picker,
+        select = picker.find('.datepicker-days tfoot th.timepicker select.time[name=minute]');
+
+    input.focus();
+
+    equal(select.children('option:first').val(), '00');
+    equal(select.children('option:eq(1)').val(), '01');
+    equal(select.children('option').length, 60);
+});
+
+test('secondsStep', function () {
+    var input = $('<input />')
+            .appendTo('#qunit-fixture')
+            .val('2012-03-05 15:9:55')
+            .datepicker({
+                format: 'yyyy-mm-dd h:i:s',
+                showTime: true,
+                secondsStep: 5
+            }),
+        dp = input.data('datepicker'),
+        picker = dp.picker,
+        select = picker.find('.datepicker-days tfoot th.timepicker select.time[name=second]');
+
+    input.focus();
+
+    equal(select.children('option:first').val(), '00');
+    equal(select.children('option:eq(1)').val(), '05');
+    equal(select.children('option').length, 12);
+});
+
+test('secondsStep with negative value', function () {
+    var input = $('<input />')
+            .appendTo('#qunit-fixture')
+            .val('2012-03-05 15:9:55')
+            .datepicker({
+                format: 'yyyy-mm-dd h:i:s',
+                showTime: true,
+                secondsStep: -2
+            }),
+        dp = input.data('datepicker'),
+        picker = dp.picker,
+        select = picker.find('.datepicker-days tfoot th.timepicker select.time[name=second]');
+
+    input.focus();
+
+    equal(select.children('option:first').val(), '00');
+    equal(select.children('option:eq(1)').val(), '01');
+    equal(select.children('option').length, 60);
+});
