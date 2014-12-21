@@ -701,17 +701,14 @@ test('showTime', function () {
     equal(select.val(), '09');
     select.val('59');
     // Seconds
-    select = target.find('select.time[name=second]');
-    ok(select.is(':visible'), 'Seconds is visible');
-    equal(select.val(), '57');
-    select.val('02');
+    ok(target.find('select.time[name=second]').is(':not(:visible)'), 'Seconds is hidden by default');
 
     ok(target.find('select.time[name=ampm]').is(':not(:visible)'), 'AM/PM is hidden by default');
 
     target.find('button').click();
     ok(picker.is(':not(:visible)'), 'Picker is hidden');
-    datesEqual(dp.dates[0], UTCDate(2012, 2, 5, 17, 59, 2));
-    datesEqual(dp.viewDate, UTCDate(2012, 2, 5, 17, 59, 2));
+    datesEqual(dp.dates[0], UTCDate(2012, 2, 5, 17, 59, 57));
+    datesEqual(dp.viewDate, UTCDate(2012, 2, 5, 17, 59, 57));
 });
 
 test('minutesStep', function () {
@@ -754,6 +751,10 @@ test('minutesStep with negative value', function () {
     equal(select.children('option').length, 60);
 });
 
+// test('minutesStep round value', function () {
+    // TODO
+// });
+
 test('secondsStep', function () {
     var input = $('<input />')
             .appendTo('#qunit-fixture')
@@ -792,4 +793,37 @@ test('secondsStep with negative value', function () {
     equal(select.children('option:first').val(), '00');
     equal(select.children('option:eq(1)').val(), '01');
     equal(select.children('option').length, 60);
+});
+
+// test('secondsStep round value', function () {
+    // TODO
+// });
+
+test('showSeconds', function () {
+    var input = $('<input />')
+            .appendTo('#qunit-fixture')
+            .val('2012-03-05 15:9:57')
+            .datepicker({
+                format: 'yyyy-mm-dd h:i:s',
+                showSeconds: true,
+                showTime: true
+            }),
+        dp = input.data('datepicker'),
+        picker = dp.picker,
+        target, select;
+
+    input.focus();
+
+    target = picker.find('.datepicker-days tfoot th.timepicker');
+
+    // Seconds
+    select = target.find('select.time[name=second]');
+    ok(select.is(':visible'), 'Seconds is visible');
+    equal(select.val(), '57');
+    select.val('02');
+
+    target.find('button').click();
+    ok(picker.is(':not(:visible)'), 'Picker is hidden');
+    datesEqual(dp.dates[0], UTCDate(2012, 2, 5, 15, 9, 2));
+    datesEqual(dp.viewDate, UTCDate(2012, 2, 5, 15, 9, 2));
 });

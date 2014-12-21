@@ -1305,6 +1305,7 @@
 		showTime: function(){
 			if (this.o.showTime) {
 				this.picker.find('[name=ampm]').hide();
+				this.picker.find('[name=second]').toggle(this.o.showSeconds);
 			} else {
 				if (!this.o.todayBtn && !this.o.clearBtn){
 					this.picker.find('tfoot').hide();
@@ -1482,6 +1483,7 @@
 		orientation: "auto",
 		rtl: false,
 		secondsStep: 1,
+		showSeconds: false,
 		showTime: false,
 		startDate: -Infinity,
 		startView: 0,
@@ -1721,7 +1723,7 @@
 						'<option value="am">am</option>'+
 						'<option value="pm">pm</option>'+
 					'</select>'+
-					' <button class="btn btn-success">' +
+					'<button class="btn btn-success">' +
 						'<span class="glyphicon glyphicon-ok"></span>' +
 					'</button>'+
 				'</th>'+
