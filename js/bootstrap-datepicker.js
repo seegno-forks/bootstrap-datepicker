@@ -1616,7 +1616,7 @@
 		multidateSeparator: ',',
 		orientation: "auto",
 		rtl: false,
-		showTime: false,
+		showTime: true,
 		startDate: -Infinity,
 		startView: 0,
 		todayBtn: false,
